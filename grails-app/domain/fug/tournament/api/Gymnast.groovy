@@ -16,5 +16,5 @@ class Gymnast {
     Date medicalRecordDueDate
     Club club
     Level level
-    groovy.lang.Category category
+    Category category
 }
