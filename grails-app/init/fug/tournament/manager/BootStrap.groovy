@@ -309,5 +309,32 @@ class BootStrap {
                 score: 4
         ).save(flush:true)
 
+
+        // MILAGROS - Panamericano
+        new Score(
+                tournament: Tournament.get(2),
+                gymnast: Gymnast.get(2),
+                exercise: Exercise.get(1),
+                score: 1
+        ).save(flush:true)
+        new Score(
+                tournament: Tournament.get(2),
+                gymnast: Gymnast.get(2),
+                exercise: Exercise.get(2),
+                score: 1
+        ).save(flush:true)
+        new Score(
+                tournament: Tournament.get(2),
+                gymnast: Gymnast.get(2),
+                exercise: Exercise.get(3),
+                score: 1
+        ).save(flush:true)
+        new Score(
+                tournament: Tournament.get(2),
+                gymnast: Gymnast.get(2),
+                exercise: Exercise.get(4),
+                score: 1
+        ).save(flush:true)
+
     }
 }

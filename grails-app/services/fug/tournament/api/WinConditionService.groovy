@@ -27,26 +27,34 @@ class WinConditionService {
     // B_FEDERATED:
     //      FEMALE: 4 aparatos, se toman los 3 mejores
 
-
-    def rankGymnastsByScore(tournamentId, levelId, categoryId, gender) {
+    /**
+     * Returns a list of maps with following form:
+     *  [gymnast: Gymnast, scores: List<Score>, total_score:[]]
+     * @param tournamentId
+     * @param levelId
+     * @param categoryId
+     * @param gender
+     * @return
+     */
+    List<Map> rankGymnastsByScore(tournamentId, levelId, categoryId, gender) {
 
         def tournament = tournamentService.get(tournamentId)
         def level = levelService.get(levelId)
         def category = categoryService.get(categoryId)
 
-        def tournamentScores = Score.withCriteria {
-            eq("tournament", tournament)
-            gymnast {
-                and {
-                    eq("level", level)
-                    eq("category", category)
-                    eq("gender", Gender.valueOf(gender))
-                }
+        def tournamentGymnasts = Gymnast.withCriteria {
+            and {
+                eq("level", level)
+                eq("category", category)
+                eq("gender", Gender.valueOf(gender))
             }
-            order "gymnast", "desc"
-            order "score", "desc"
+
+            groupProperty "id"
         }
 
-        tournamentScores
+        tournamentGymnasts.collect { gymnast ->
+            def scores = gymnast.scores.findAll { it.tournament == tournament }.sort { -it.score }.take(tournament.type.exerciseLimit)
+            [gymnast: gymnast, scores: scores, total_score: scores.sum { it.score }]
+        }.sort { -it.total_score }
     }
 }

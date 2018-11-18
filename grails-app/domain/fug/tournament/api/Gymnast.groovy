@@ -12,6 +12,8 @@ class Gymnast {
         category nullable: true
     }
 
+    static hasMany = [scores: Score]
+
     String name
     Gender gender
     Date birthDate
