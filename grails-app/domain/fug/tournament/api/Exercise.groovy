@@ -7,4 +7,6 @@ class Exercise {
     }
 
     String name
+
+    String toString() { this.name }
 }

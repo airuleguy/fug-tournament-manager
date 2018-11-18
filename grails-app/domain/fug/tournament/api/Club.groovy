@@ -8,4 +8,8 @@ class Club {
 
     String name
     static hasMany = [gymnasts: Gymnast]
+
+    String toString() {
+        this.name
+    }
 }

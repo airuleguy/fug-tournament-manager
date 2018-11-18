@@ -35,3 +35,4 @@
 .gradle/*
 .idea/*
 *.iml
+*.log

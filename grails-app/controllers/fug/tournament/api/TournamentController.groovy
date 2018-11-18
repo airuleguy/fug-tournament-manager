@@ -5,7 +5,8 @@ import static org.springframework.http.HttpStatus.*
 
 class TournamentController {
 
-    TournamentService tournamentService
+    def winConditionService
+    def tournamentService
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
@@ -15,6 +16,7 @@ class TournamentController {
     }
 
     def show(Long id) {
+        def stuff = winConditionService.rankGymnastsByScore(id, 1L, 2L, "FEMALE")
         respond tournamentService.get(id)
     }
 

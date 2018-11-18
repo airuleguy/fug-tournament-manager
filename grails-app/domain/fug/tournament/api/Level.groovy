@@ -7,4 +7,8 @@ class Level {
     }
 
     String name
+
+    String toString() {
+        this.name
+    }
 }

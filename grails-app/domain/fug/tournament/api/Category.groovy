@@ -7,4 +7,8 @@ class Category {
     }
 
     String name
+
+    String toString() {
+        this.name
+    }
 }

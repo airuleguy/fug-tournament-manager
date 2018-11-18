@@ -5,8 +5,8 @@
 // You're free to add application-wide JavaScript to this file, but it's generally better
 // to create separate JavaScript files as needed.
 //
-//= require jquery-2.2.0.min
-//= require bootstrap
+//= require jquery-3.3.1.min
+//= require bootstrap.bundle
 //= require_tree .
 //= require_self
 

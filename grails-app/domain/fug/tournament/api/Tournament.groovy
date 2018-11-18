@@ -7,7 +7,6 @@ class Tournament {
         startDate nullable: false
         endDate nullable: false
         type nullable: false
-        gender nullable: false
     }
 
     static hasMany = [scores: Score]
@@ -16,5 +15,8 @@ class Tournament {
     Date startDate
     Date endDate
     TournamentType type
-    Gender gender
+
+    String toString() {
+        "${this.name} [${this.type?.label}]"
+    }
 }

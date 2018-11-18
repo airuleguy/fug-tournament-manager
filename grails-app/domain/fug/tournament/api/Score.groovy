@@ -10,4 +10,8 @@ class Score {
     Gymnast gymnast
     Exercise exercise
     double score
+
+    String toString() {
+        "[${this.score}]: ${this.gymnast} - ${this.exercise}"
+    }
 }
