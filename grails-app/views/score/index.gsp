@@ -13,15 +13,22 @@
                 <li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>
             </ul>
         </div>
-        <div id="list-score" class="content scaffold-list" role="main">
-            <h1><g:message code="default.list.label" args="[entityName]" /></h1>
+        <h1 class="display-4"><small><g:message code="tournament.label" />:</small> ${tournament.name}</h1>
+        <div class="card">
+            <div class="card-title">
+                <h1><g:message code="default.list.label" args="[entityName]" /></h1>
+            </div>
+            <div class="card-body">
             <g:if test="${flash.message}">
                 <div class="message" role="status">${flash.message}</div>
             </g:if>
-            <f:table collection="${scoreList}" />
+            <div id="list-score" class="content scaffold-list" role="main">
+                <f:table collection="${scoreList}" properties="${["gymnast", "exercise", "score"]}" />
 
-            <div class="pagination">
-                <g:paginate total="${scoreCount ?: 0}" />
+                <div class="pagination">
+                    <g:paginate total="${scoreCount ?: 0}" />
+                </div>
+            </div>
             </div>
         </div>
     </body>

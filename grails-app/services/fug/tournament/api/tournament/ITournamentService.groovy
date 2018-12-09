@@ -1,9 +1,8 @@
-package fug.tournament.api
+package fug.tournament.api.tournament
 
-import grails.gorm.services.Service
+import fug.tournament.api.Tournament
 
-@Service(Tournament)
-interface TournamentService {
+interface ITournamentService {
 
     Tournament get(Serializable id)
 

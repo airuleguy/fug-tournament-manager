@@ -5,17 +5,19 @@ import static org.springframework.http.HttpStatus.*
 
 class ScoreController {
 
-    ScoreService scoreService
+    def scoreDataService
+    def tournamentService
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
-        respond scoreService.list(params), model:[scoreCount: scoreService.count()]
+        def tournament = tournamentService.get(params.tournamentId)
+        respond scoreDataService.list(params), model:[scoreCount: scoreDataService.count(), tournament: tournament]
     }
 
     def show(Long id) {
-        respond scoreService.get(id)
+        respond scoreDataService.get(id)
     }
 
     def create() {
@@ -29,7 +31,7 @@ class ScoreController {
         }
 
         try {
-            scoreService.save(score)
+            scoreDataService.save(score)
         } catch (ValidationException e) {
             respond score.errors, view:'create'
             return
@@ -45,7 +47,7 @@ class ScoreController {
     }
 
     def edit(Long id) {
-        respond scoreService.get(id)
+        respond scoreDataService.get(id)
     }
 
     def update(Score score) {
@@ -55,7 +57,7 @@ class ScoreController {
         }
 
         try {
-            scoreService.save(score)
+            scoreDataService.save(score)
         } catch (ValidationException e) {
             respond score.errors, view:'edit'
             return
@@ -76,7 +78,7 @@ class ScoreController {
             return
         }
 
-        scoreService.delete(id)
+        scoreDataService.delete(id)
 
         request.withFormat {
             form multipartForm {

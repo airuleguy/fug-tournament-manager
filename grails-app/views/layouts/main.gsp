@@ -15,18 +15,20 @@
 </head>
 <body>
 
-    <div class="navbar navbar-expand-lg navbar-dark bg-dark" role="navigation">
-        <a class="navbar-brand" href="/#">
-            <g:message code="default.home.title" default="Uruguayan Federation of Gymnastics" />
-        </a>
-    </div>
+    <div class="container">
+        <div class="navbar navbar-expand-lg navbar-dark bg-dark" role="navigation">
+            <a class="navbar-brand" href="/#">
+                <g:message code="default.home.title" default="Uruguayan Federation of Gymnastics" />
+            </a>
+        </div>
 
-    <g:layoutBody/>
+        <g:layoutBody/>
 
-    <div class="footer" role="contentinfo"></div>
+        <div class="footer" role="contentinfo"></div>
 
-    <div id="spinner" class="spinner" style="display:none;">
-        <g:message code="spinner.alt" default="Loading&hellip;"/>
+        <div id="spinner" class="spinner" style="display:none;">
+            <g:message code="spinner.alt" default="Loading&hellip;"/>
+        </div>
     </div>
 
     <asset:javascript src="application.js"/>
