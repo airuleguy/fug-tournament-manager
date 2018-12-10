@@ -17,11 +17,13 @@ class ScoreController {
     }
 
     def show(Long id) {
-        respond scoreDataService.get(id)
+        def tournament = tournamentService.get(params.tournamentId)
+        respond scoreDataService.get(id), model:[tournament: tournament]
     }
 
     def create() {
-        respond new Score(params)
+        def tournament = tournamentService.get(params.tournamentId)
+        respond new Score(params), model: [tournament: tournament]
     }
 
     def save(Score score) {
@@ -47,7 +49,8 @@ class ScoreController {
     }
 
     def edit(Long id) {
-        respond scoreDataService.get(id)
+        def tournament = tournamentService.get(params.tournamentId)
+        respond scoreDataService.get(id), model: [tournament: tournament]
     }
 
     def update(Score score) {
