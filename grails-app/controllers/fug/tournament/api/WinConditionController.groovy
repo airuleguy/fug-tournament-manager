@@ -1,12 +1,16 @@
 package fug.tournament.api
 
+import grails.converters.JSON
+
 class WinConditionController {
 
     def winConditionService
 
-    def index(Integer max) {
-        params.max = Math.min(max ?: 10, 100)
-        def rankedGymnasts = winConditionService.rankGymnastsByScore(1L, 1L, 2L, "FEMALE")
-        render(view:"index", model:[winners: rankedGymnasts, count: rankedGymnasts.size()])
+    def rank(Long tournamentId) {
+
+        def rankedGymnasts = winConditionService.rankGymnastsByScore(tournamentId)
+
+        //render(view:"index", model:[winners: rankedGymnasts, count: rankedGymnasts.size(), levels: null])
+        render rankedGymnasts as JSON
     }
 }

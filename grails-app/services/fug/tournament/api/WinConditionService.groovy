@@ -6,9 +6,6 @@ import grails.gorm.transactions.Transactional
 class WinConditionService {
 
     def tournamentService
-    def levelService
-    def categoryService
-    def gymnastService
 
     // Win conditions
     // Per Gymnast
@@ -36,25 +33,55 @@ class WinConditionService {
      * @param gender
      * @return
      */
-    List<Map> rankGymnastsByScore(tournamentId, levelId, categoryId, gender) {
+    List<Map> rankGymnastsByScoreAndLevelAndCategoryAndGender(tournament, level, category, gender) {
 
-        def tournament = tournamentService.get(tournamentId)
-        def level = levelService.get(levelId)
-        def category = categoryService.get(categoryId)
-
-        def tournamentGymnasts = Gymnast.withCriteria {
+        def tournamentScores = Score.withCriteria {
             and {
-                eq("level", level)
-                eq("category", category)
-                eq("gender", Gender.valueOf(gender))
+                eq("tournament", tournament)
+                gymnast {
+                    eq("category", category )
+                    eq("level", level)
+                    eq("gender", gender)
+                }
             }
-
-            groupProperty "id"
         }
 
-        tournamentGymnasts.collect { gymnast ->
-            def scores = gymnast.scores.findAll { it.tournament == tournament }.sort { -it.score }.take(tournament.type.exerciseLimit)
-            [gymnast: gymnast, scores: scores, total_score: scores.sum { it.score }]
-        }.sort { -it.total_score }
+        if(tournamentScores.size > 0) {
+            def gymnastScores = tournamentScores.groupBy { score -> score.gymnast }
+
+            def result = gymnastScores.collect { scoresByGymnast ->
+                def limitedScores = scoresByGymnast.value.sort { -it.score }.take(tournament.type.exerciseLimit)
+                [gymnast: scoresByGymnast.key, scores: limitedScores, total_score: limitedScores.sum { it.score }]
+            }
+
+            result
+        }
     }
+
+    List<Map> rankGymnastsByScore(tournamentId) {
+
+        def tournament = tournamentService.get(tournamentId)
+
+        def levels = Level.findAll()
+        def categories = Category.findAll()
+        def genders = Gender.values() as List
+
+        def rankedGymnasts = []
+
+        genders.forEach { gender ->
+            levels.forEach { level ->
+                categories.forEach { category ->
+
+                    rankedGymnasts << [gender: gender,
+                                       level: level,
+                                       category: category,
+                                       gymnasts: rankGymnastsByScoreAndLevelAndCategoryAndGender(tournament, level, category, gender)]
+
+                }
+            }
+        }
+
+        rankedGymnasts
+    }
+
 }

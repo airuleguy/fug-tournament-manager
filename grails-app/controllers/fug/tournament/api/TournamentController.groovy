@@ -16,7 +16,6 @@ class TournamentController {
     }
 
     def show(Long id) {
-        def stuff = winConditionService.rankGymnastsByScore(id, 1L, 2L, "FEMALE")
         respond tournamentService.get(id)
     }
 
