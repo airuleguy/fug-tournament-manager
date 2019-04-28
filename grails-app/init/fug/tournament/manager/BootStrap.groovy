@@ -200,8 +200,8 @@ class BootStrap {
     }
 
     def loadMockTournaments() {
-        new Tournament(name: "Copa Olímpia", startDate: new Date(), endDate: new Date() + 1, type: TournamentType.A_FEDERATED).save(flush:true)
-        new Tournament(name: "Juegos Panamericanos de Cachito El Verdulero", startDate: new Date() + 100, endDate: new Date() + 110, type: TournamentType.B_FEDERATED).save(flush:true)
+        new Tournament(name: "Copa Olímpia", startDate: new Date(), endDate: new Date() + 1, type: TournamentType.A_FEDERATED, gender: Gender.FEMALE).save(flush:true)
+        new Tournament(name: "Juegos Panamericanos de Cachito El Verdulero", startDate: new Date() + 100, endDate: new Date() + 110, type: TournamentType.B_FEDERATED, gender: Gender.FEMALE).save(flush:true)
     }
 
     def loadMockScores() {

@@ -46,7 +46,8 @@ class UrlMappings {
             "/gymnast/$id/delete"(controller: "gymnast", action: "delete")
             "/gymnast/create"(controller: "gymnast", action: "create")
 
-            "/winCondition/$tournamentId"(controller: "winCondition", action: "rank")
+            "/winCondition/$tournamentId/allaround"(controller: "winCondition", action: "allAround")
+            "/winCondition/$tournamentId/clubs"(controller: "winCondition", action: "clubs")
         }
 
 
