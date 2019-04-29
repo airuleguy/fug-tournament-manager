@@ -7,22 +7,9 @@ class WinConditionService {
 
     def tournamentService
 
-    // Win conditions
-    // Per Gymnast
-    //      Por nivel y por categoría
-
-    // Per team:
-    //      por nivel y club
-    // se toman las mismas condiciones de federado A o B
-
-    // Per exercise:
-    //      por nivel, categoría y aparato
-
-    // A_FEDERATED:
-    //      MALE: 6 ejercicios, se toman los 6
-
-    // B_FEDERATED:
-    //      FEMALE: 4 aparatos, se toman los 3 mejores
+    def levelService
+    def categoryService
+    def exerciseService
 
 
     def limitScoresByTournamentType(tournament, scores) {
@@ -59,7 +46,7 @@ class WinConditionService {
 
             def result = gymnastScores.collect { scoresByGymnast ->
                 def limitedScores = limitScoresByTournamentType(tournament, scoresByGymnast)
-                [gymnast: scoresByGymnast.key, scores: limitedScores, total_score: limitedScores.sum { it.score }]
+                new WinCondition(tournament: tournament, gymnast: scoresByGymnast.key, scores: limitedScores, totalScore: limitedScores.sum { it.score }, level: level, category: category)
             }
 
             result
@@ -70,8 +57,8 @@ class WinConditionService {
 
         def tournament = tournamentService.get(tournamentId)
 
-        def levels = Level.findAll()
-        def categories = Category.findAll()
+        def levels = levelService.list()
+        def categories = categoryService.list()
 
         def result = []
 
@@ -81,10 +68,9 @@ class WinConditionService {
                 def rankedGymnasts = rankGymnastsByScoreAndLevelAndCategory(tournament, level, category)
 
                 if(rankedGymnasts) {
-                    result << [gender: tournament.gender,
-                                       level: level,
-                                       category: category,
-                                       gymnasts: rankedGymnasts]
+                    result << [level: level,
+                               category: category,
+                               gymnasts: rankedGymnasts]
                 }
             }
         }
@@ -122,7 +108,7 @@ class WinConditionService {
 
         def result = []
 
-        Level.findAll().forEach { level ->
+        levelService.list().forEach { level ->
             def rankedClubsByLevel = rankClubsByLevel(tournament, level)
 
             if (rankedClubsByLevel) {
@@ -134,5 +120,45 @@ class WinConditionService {
     }
 
 
-    
+    List<Map> rankExercises(tournamentId) {
+        def tournament = tournamentService.get(tournamentId)
+
+        def result = []
+
+        levelService.list().forEach { level ->
+            categoryService.list().forEach { category ->
+                exerciseService.list().forEach { exercise ->
+                    def rankedGymnastsByExercise = rankGymnastsByExerciseAndLevelAndCategory(tournament, exercise, level, category)
+
+                    if(rankedGymnastsByExercise) {
+                        result << rankedGymnastsByExercise
+                    }
+                }
+            }
+        }
+
+        result
+    }
+
+
+    def rankGymnastsByExerciseAndLevelAndCategory(tournament, exercise, level, category) {
+        def exerciseScores = Score.withCriteria {
+            and {
+                eq("tournament", tournament)
+                eq("exercise", exercise)
+                gymnast {
+                    eq("level", level)
+                    eq("category", category)
+                }
+            }
+        }
+
+        if(exerciseScores.size > 0) {
+
+            [level: level, category: category, execise: exercise, scores:exerciseScores.sort { -it.score }]
+        }
+    }
+
+
+
 }

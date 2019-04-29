@@ -13,7 +13,7 @@
                 <li><g:link class="create" action="create" uri="/gymnastics/tournaments/${tournament.id}/scores/create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>
             </ul>
         </div>
-        <h1 class="display-4"><small><g:message code="tournament.label" />:</small> ${tournament.name}</h1>
+        <h1 class="display-4"><small><g:message code="tournament.label" default="Tournament" />:</small> ${tournament.name}</h1>
         <div class="card">
             <div class="card-body">
             <h3 class="card-title"><g:message code="default.list.label" args="[entityName]" /></h3>

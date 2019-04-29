@@ -48,6 +48,7 @@ class UrlMappings {
 
             "/winCondition/$tournamentId/allaround"(controller: "winCondition", action: "allAround")
             "/winCondition/$tournamentId/clubs"(controller: "winCondition", action: "clubs")
+            "/winCondition/$tournamentId/exercises"(controller: "winCondition", action: "exercises")
         }
 
 
