@@ -2,28 +2,35 @@
 <html>
 <head>
     <meta name="layout" content="main"/>
-    <title>Welcome to Grails</title>
+    <title><g:message code="system.title" default="Tournament Manager | FUG" /></title>
 </head>
 <body>
     <div id="content" role="main">
-        <section class="row colset-2-its">
-            <h1>Welcome to Grails</h1>
-
-            <p>
-                Congratulations, you have successfully started your first Grails application! At the moment
-                this is the default page, feel free to modify it to either redirect to a controller or display
-                whatever content you may choose. Below is a list of controllers that are currently deployed in
-                this application, click on each to execute its default action:
-            </p>
-
+        <section class="row">
+            <h1><g:message code="system.title" default="Tournament Manager | FUG" /> </h1>
+        </section>
+        <section class="row">
             <div id="controllers" role="navigation">
-                <h2>Available Controllers:</h2>
+                <h2><g:message code="default.home.goto" default="Manage" /></h2>
                 <ul>
-                    <g:each var="c" in="${grailsApplication.controllerClasses.sort { it.name } }">
-                        <li class="controller">
-                            <g:link controller="${c.logicalPropertyName}">${c.name}</g:link>
-                        </li>
-                    </g:each>
+                    <li class="controller">
+                        <g:link controller="Tournament"><g:message code="tournament.label" /></g:link>
+                    </li>
+                    <li class="controller">
+                        <g:link controller="GymnastController"><g:message code="gymnast.label" /></g:link>
+                    </li>
+                    <li class="controller">
+                        <g:link controller="LevelController"><g:message code="level.label" /></g:link>
+                    </li>
+                    <li class="controller">
+                        <g:link controller="CategoryController"><g:message code="category.label" /></g:link>
+                    </li>
+                    <li class="controller">
+                        <g:link controller="ClubController"><g:message code="club.label" /></g:link>
+                    </li>
+                    <li class="controller">
+                        <g:link controller="ExerciseController"><g:message code="exercise.label" /></g:link>
+                    </li>
                 </ul>
             </div>
         </section>

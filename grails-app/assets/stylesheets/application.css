@@ -13,3 +13,10 @@
 *= require mobile
 *= require_self
 */
+
+
+require bootstrap
+require grails
+require main
+require mobile
+require_self
