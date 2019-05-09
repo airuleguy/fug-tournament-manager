@@ -3,6 +3,7 @@ package fug.tournament.api
 class Score {
 
     static constraints = {
+        tournament display: false
     }
 
     static belongsTo = [tournament: Tournament]

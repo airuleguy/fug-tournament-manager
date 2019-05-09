@@ -14,22 +14,22 @@
                 <h2><g:message code="default.home.goto" default="Manage" /></h2>
                 <ul>
                     <li class="controller">
-                        <g:link controller="Tournament"><g:message code="tournament.label" /></g:link>
+                        <g:link controller="tournament"><g:message code="tournament.label" /></g:link>
                     </li>
                     <li class="controller">
-                        <g:link controller="GymnastController"><g:message code="gymnast.label" /></g:link>
+                        <g:link controller="gymnast"><g:message code="gymnast.label" /></g:link>
                     </li>
                     <li class="controller">
-                        <g:link controller="LevelController"><g:message code="level.label" /></g:link>
+                        <g:link controller="level"><g:message code="level.label" /></g:link>
                     </li>
                     <li class="controller">
-                        <g:link controller="CategoryController"><g:message code="category.label" /></g:link>
+                        <g:link controller="category"><g:message code="category.label" /></g:link>
                     </li>
                     <li class="controller">
-                        <g:link controller="ClubController"><g:message code="club.label" /></g:link>
+                        <g:link controller="club"><g:message code="club.label" /></g:link>
                     </li>
                     <li class="controller">
-                        <g:link controller="ExerciseController"><g:message code="exercise.label" /></g:link>
+                        <g:link controller="exercise"><g:message code="exercise.label" /></g:link>
                     </li>
                 </ul>
             </div>

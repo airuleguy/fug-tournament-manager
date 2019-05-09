@@ -19,6 +19,7 @@
             <g:if test="${flash.message}">
             <div class="message" role="status">${flash.message}</div>
             </g:if>
+            <h2><g:message code="score.tournament.label"/>: <g:link controller="score" action="index" params="[tournamentId: tournament.id]" >${tournament}</g:link></h2>
             <f:display bean="score" />
             <g:form resource="${this.score}" method="DELETE">
                 <fieldset class="buttons">

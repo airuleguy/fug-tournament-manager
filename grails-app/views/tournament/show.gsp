@@ -19,11 +19,12 @@
             <g:if test="${flash.message}">
             <div class="message" role="status">${flash.message}</div>
             </g:if>
-            <f:display bean="tournament" />
+            <f:display bean="tournament" except="scores"/>
             <g:form resource="${this.tournament}" method="DELETE">
                 <fieldset class="buttons">
                     <g:link class="edit" action="edit" resource="${this.tournament}"><g:message code="default.button.edit.label" default="Edit" /></g:link>
                     <input class="delete" type="submit" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
+                    <g:link class="create" controller="score" action="create" resource="${this.tournament}"><g:message code="tournament.scores.label" default="Edit" /></g:link>
                 </fieldset>
             </g:form>
         </div>

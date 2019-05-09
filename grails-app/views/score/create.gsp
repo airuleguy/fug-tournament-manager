@@ -10,7 +10,7 @@
         <div class="nav" role="navigation">
             <ul>
                 <li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
-                <li><g:link class="list" action="index"><g:message code="default.list.label" args="[entityName]" /></g:link></li>
+                <li><g:link controller="score" action="index" params="[tournamentId: tournament.id]" ><g:message code="default.list.label" args="[entityName]"/></g:link></li>
             </ul>
         </div>
         <div id="create-score" class="content scaffold-create" role="main">
@@ -25,9 +25,10 @@
                 </g:eachError>
             </ul>
             </g:hasErrors>
-            <g:form resource="${this.score}" method="POST">
+            <g:form resource="${this.score}" method="POST" controller="score" action="save" params="[tournamentId: tournament.id]">
                 <fieldset class="form">
-                    <f:all bean="score"/>
+                    <h2><g:message code="score.tournament.label"/>: <g:link controller="score" action="index" params="[tournamentId: tournament.id]" >${tournament}</g:link></h2>
+                    <f:all bean="score" />
                 </fieldset>
                 <fieldset class="buttons">
                     <g:submitButton name="create" class="save" value="${message(code: 'default.button.create.label', default: 'Create')}" />

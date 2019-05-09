@@ -37,7 +37,7 @@ class TournamentController {
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.created.message', args: [message(code: 'tournament.label', default: 'Tournament'), tournament.id])
+                flash.message = message(code: 'default.created.message', args: [message(code: 'tournament.label', default: 'Tournament'), tournament.name])
                 redirect tournament
             }
             '*' { respond tournament, [status: CREATED] }

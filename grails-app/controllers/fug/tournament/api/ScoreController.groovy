@@ -10,29 +10,32 @@ class ScoreController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
-    def index(Integer max) {
+    def index(Long tournamentId, Integer max) {
         params.max = Math.min(max ?: 10, 100)
-        def tournament = tournamentService.get(params.tournamentId)
+        def tournament = tournamentService.get(tournamentId)
         respond scoreDataService.list(params), model:[scoreCount: scoreDataService.count(), tournament: tournament]
     }
 
-    def show(Long id) {
-        def tournament = tournamentService.get(params.tournamentId)
+    def show(Long tournamentId, Long id) {
+        def tournament = tournamentService.get(tournamentId)
         respond scoreDataService.get(id), model:[tournament: tournament]
     }
 
-    def create() {
-        def tournament = tournamentService.get(params.tournamentId)
+    def create(Long tournamentId) {
+        def tournament = tournamentService.get(tournamentId)
         respond new Score(params), model: [tournament: tournament]
     }
 
-    def save(Score score) {
-        if (score == null) {
+    def save(Long tournamentId, Score score) {
+
+	    def tournament = tournamentService.get(tournamentId)
+        if (score == null || tournament == null) {
             notFound()
             return
         }
 
         try {
+	        score.tournament = tournament
             scoreDataService.save(score)
         } catch (ValidationException e) {
             respond score.errors, view:'create'
@@ -44,17 +47,17 @@ class ScoreController {
                 flash.message = message(code: 'default.created.message', args: [message(code: 'score.label', default: 'Score'), score.id])
                 redirect score
             }
-            '*' { respond score, [status: CREATED] }
+            '*' { respond score, model:[status: CREATED, tournament: score.tournament] }
         }
     }
 
-    def edit(Long id) {
-        def tournament = tournamentService.get(params.tournamentId)
+    def edit(Long tournamentId, Long id) {
+        def tournament = tournamentService.get(tournamentId)
         respond scoreDataService.get(id), model: [tournament: tournament]
     }
 
     def update(Score score) {
-        if (score == null) {
+        if (score == null || tournament == null) {
             notFound()
             return
         }
@@ -71,11 +74,11 @@ class ScoreController {
                 flash.message = message(code: 'default.updated.message', args: [message(code: 'score.label', default: 'Score'), score.id])
                 redirect score
             }
-            '*'{ respond score, [status: OK] }
+            '*'{ respond score, model:[status: OK, tournament: score.tournament] }
         }
     }
 
-    def delete(Long id) {
+    def delete(Long tournamentId, Long id) {
         if (id == null) {
             notFound()
             return

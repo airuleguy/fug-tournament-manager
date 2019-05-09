@@ -29,6 +29,7 @@
             <g:form resource="${this.score}" method="PUT">
                 <g:hiddenField name="version" value="${this.score?.version}" />
                 <fieldset class="form">
+                    <h2><g:message code="score.tournament.label"/>: <g:link controller="score" action="index" params="[tournamentId: tournament.id]" >${tournament}</g:link></h2>
                     <f:all bean="score"/>
                 </fieldset>
                 <fieldset class="buttons">
