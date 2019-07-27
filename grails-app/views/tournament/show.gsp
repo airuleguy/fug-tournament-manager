@@ -24,7 +24,7 @@
                 <fieldset class="buttons">
                     <g:link class="edit" action="edit" resource="${this.tournament}"><g:message code="default.button.edit.label" default="Edit" /></g:link>
                     <input class="delete" type="submit" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
-                    <g:link class="create" controller="score" action="create" resource="${this.tournament}"><g:message code="tournament.scores.label" default="Edit" /></g:link>
+                    <g:link mapping="listScores" params="[tournamentId: this.tournament.id]" class="create" controller="score" action="create"><g:message code="tournament.scores.label" default="Edit" /></g:link>
                 </fieldset>
             </g:form>
         </div>

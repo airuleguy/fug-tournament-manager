@@ -10,7 +10,7 @@
         <div class="nav" role="navigation">
             <ul>
                 <li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
-                <li><g:link class="create" uri="/gymnastics/tournaments/${tournament.id}/scores/create" ><g:message code="default.new.label" args="[entityName]" /></g:link></li>
+                <li><g:link class="create" uri="/tournaments/${tournament.id}/scores/create" ><g:message code="default.new.label" args="[entityName]" /></g:link></li>
             </ul>
         </div>
         <div id="list-score" class="content scaffold-list" role="main">
@@ -18,7 +18,7 @@
             <g:if test="${flash.message}">
                 <div class="message" role="status">${flash.message}</div>
             </g:if>
-            <h2><g:message code="score.tournament.label"/>: <g:link controller="score" action="index" params="[tournamentId: tournament.id]" >${tournament}</g:link></h2>
+            <h2><g:message code="score.tournament.label"/>: <g:link controller="tournament" action="show" id="${tournament.id}">${tournament}</g:link></h2>
             <f:table collection="${scoreList}" />
 
             <div class="pagination">

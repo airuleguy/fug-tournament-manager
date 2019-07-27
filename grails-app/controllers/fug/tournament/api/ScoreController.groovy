@@ -8,6 +8,7 @@ class ScoreController {
     def scoreDataService
     def tournamentService
 
+    static scaffold = Score
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
     def index(Long tournamentId, Integer max) {
@@ -73,8 +74,8 @@ class ScoreController {
             form multipartForm {
                 flash.message = message(code: 'default.updated.message', args: [message(code: 'score.label', default: 'Score'), score.id])
                 redirect score
-            }
-            '*'{ respond score, model:[status: OK, tournament: score.tournament] }
+            } // TODO not working! It won't use the correct URL defined in
+            '*'{ redirect action: "show", params:[status: OK, tournament: score.tournament, score: score] }
         }
     }
 

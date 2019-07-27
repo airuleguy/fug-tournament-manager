@@ -8,7 +8,7 @@
     <body>
     <div class="card">
         <div class="card-title">
-            <h1><f:display bean="tournament" property="name"/></h1>
+            <h1><g:message code="score.tournament.label"/>: <g:link controller="tournament" action="show" id="${tournament.id}">${tournament}</g:link></h1>
         </div>
         <div class="card-body">
         <g:each in="${ranking}" var="current">
