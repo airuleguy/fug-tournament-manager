@@ -11,7 +11,12 @@
         <tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
             <g:each in="${domainProperties}" var="p" status="j">
                 <g:if test="${j==0}">
-                    <td><g:link method="GET" resource="${bean}"><f:display bean="${bean}" property="${p.property}" displayStyle="${displayStyle?:'table'}" theme="${theme}"/></g:link></td>
+                    <g:if test="${bean instanceof fug.tournament.api.Score}">
+                        <td><g:link controller="score" action="show" params="[tournamentId: bean.tournament.id, id:bean.id]"><f:display bean="${bean}" property="${p.property}" displayStyle="${displayStyle?:'table'}" theme="${theme}"/></g:link></td>
+                    </g:if>
+                    <g:else>
+                        <td><g:link method="GET" resource="${bean}"><f:display bean="${bean}" property="${p.property}" displayStyle="${displayStyle?:'table'}" theme="${theme}"/></g:link></td>
+                    </g:else>
                 </g:if>
                 <g:else>
                     <td><f:display bean="${bean}" property="${p.property}"  displayStyle="${displayStyle?:'table'}" theme="${theme}"/></td>
