@@ -26,7 +26,7 @@
                 </g:eachError>
             </ul>
             </g:hasErrors>
-            <g:form resource="${this.score}" method="PUT">
+            <g:form controller="score" action="update" params="[tournamentId:score.tournament.id, id:score.id]" method="PUT">
                 <g:hiddenField name="version" value="${this.score?.version}" />
                 <fieldset class="form">
                     <h2><g:message code="score.tournament.label"/>: <g:link controller="tournament" action="show" id="${this.score.tournament.id}">${this.score.tournament}</g:link></h2>

@@ -22,7 +22,7 @@
             <f:table collection="${scoreList}" />
 
             <div class="pagination">
-                <g:paginate total="${scoreCount ?: 0}" />
+                <g:paginate controller="score" action="index" params="[tournamentId: tournament.id]" total="${scoreCount ?: 0}" />
             </div>
         </div>
     </body>

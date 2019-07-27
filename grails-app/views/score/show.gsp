@@ -21,7 +21,7 @@
             </g:if>
             <h2><g:message code="score.tournament.label"/>: <g:link controller="score" action="index" params="[tournamentId: tournament.id]" >${tournament}</g:link></h2>
             <f:display bean="score" />
-            <g:form resource="${this.score}" method="DELETE">
+            <g:form method="DELETE" controller="score" action="delete" params="[tournamentId:score.tournament.id, id:score.id]">
                 <fieldset class="buttons">
                     <g:link class="edit" action="edit" params="[tournamentId: score.tournament.id, id:score.id]"><g:message code="default.button.edit.label" default="Edit" /></g:link>
                     <input class="delete" type="submit" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />

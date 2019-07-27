@@ -39,14 +39,14 @@ class ScoreController {
 	        score.tournament = tournament
             scoreDataService.save(score)
         } catch (ValidationException e) {
-            respond score.errors, view:'create'
+            respond score.errors, view:'create', model:[tournament: tournament]
             return
         }
 
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.created.message', args: [message(code: 'score.label', default: 'Score'), score.id])
-                redirect score
+                redirect action: "show", params:[status: CREATED, tournamentId: score.tournament.id, id: score.id]
             }
             '*' { respond score, model:[status: CREATED, tournament: score.tournament] }
         }
@@ -57,8 +57,8 @@ class ScoreController {
         respond scoreDataService.get(id), model: [tournament: tournament]
     }
 
-    def update(Score score) {
-        if (score == null || tournament == null) {
+    def update(Long tournamentId, Score score) {
+        if (score == null || tournamentId == null) {
             notFound()
             return
         }
@@ -66,21 +66,21 @@ class ScoreController {
         try {
             scoreDataService.save(score)
         } catch (ValidationException e) {
-            respond score.errors, view:'edit'
+            respond score.errors, view:'edit', model:[tournament: score.tournament]
             return
         }
 
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.updated.message', args: [message(code: 'score.label', default: 'Score'), score.id])
-                redirect score
-            } // TODO not working! It won't use the correct URL defined in
-            '*'{ redirect action: "show", params:[status: OK, tournament: score.tournament, score: score] }
+                redirect controller:"score", action:"show", params:[tournamentId: tournamentId, id:score.id]
+            }
+            '*'{ redirect controller:"score", action: "index", params:[status: OK, tournamentId: tournamentId] }
         }
     }
 
     def delete(Long tournamentId, Long id) {
-        if (id == null) {
+        if (!id || !tournamentId) {
             notFound()
             return
         }
@@ -90,17 +90,17 @@ class ScoreController {
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.deleted.message', args: [message(code: 'score.label', default: 'Score'), id])
-                redirect action:"index", method:"GET"
+                redirect action:"index", params:[tournamentId: tournamentId]
             }
             '*'{ render status: NO_CONTENT }
         }
     }
 
-    protected void notFound() {
+    protected void notFound(Long tournamentId) {
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.not.found.message', args: [message(code: 'score.label', default: 'Score'), params.id])
-                redirect action: "index", method: "GET"
+                redirect action: "index", method: "GET", params:[tournamentId: tournamentId]
             }
             '*'{ render status: NOT_FOUND }
         }

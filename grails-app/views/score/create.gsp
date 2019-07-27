@@ -25,7 +25,7 @@
                 </g:eachError>
             </ul>
             </g:hasErrors>
-            <g:form resource="${this.score}" method="POST" controller="score" action="save" params="[tournamentId: tournament.id]">
+            <g:form method="POST" controller="score" action="save" params="[tournamentId: tournament.id]">
                 <fieldset class="form">
                     <h2><g:message code="score.tournament.label"/>: <g:link controller="tournament" action="show" id="${tournament.id}">${tournament}</g:link></h2>
                     <f:all bean="score" />
