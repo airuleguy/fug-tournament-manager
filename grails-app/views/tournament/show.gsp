@@ -22,9 +22,12 @@
             <f:display bean="tournament" except="scores"/>
             <g:form resource="${this.tournament}" method="DELETE">
                 <fieldset class="buttons">
-                    <g:link class="list" controller="score" action="index" params="[tournamentId: this.tournament.id]"><g:message code="tournament.scores.label" default="Edit" /></g:link>
+                    <g:link class="list" controller="score" action="index" params="[tournamentId: this.tournament.id]"><g:message code="tournament.scores.label" default="Scores" /></g:link>
                     <g:link class="edit" action="edit" resource="${this.tournament}"><g:message code="default.button.edit.label" default="Edit" /></g:link>
                     <input class="delete" type="submit" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
+                    <g:link class="list" controller="winCondition" action="allAround" params="[tournamentId: this.tournament.id]"><g:message code="winCondition.allAround.label" default="Winners" /></g:link>
+                    <g:link class="list" controller="winCondition" action="clubs" params="[tournamentId: this.tournament.id]"><g:message code="winCondition.clubs.label" default="Winners" /></g:link>
+                    <g:link class="list" controller="winCondition" action="exercises" params="[tournamentId: this.tournament.id]"><g:message code="winCondition.exercises.label" default="Winners" /></g:link>
                 </fieldset>
             </g:form>
         </div>

@@ -149,7 +149,11 @@ class WinConditionService {
 
         if(exerciseScores.size > 0) {
             def sortedScores = exerciseScores.sort { -it.score }
-            [new WinCondition(tournament: tournament, exercise: exercise, scores: sortedScores, totalScore: sortedScores.sum { it.score }, level: level, category: category)]
+            def result = sortedScores.collect { sortedScore ->
+                new WinCondition(gymnast:sortedScore.gymnast, tournament: tournament, exercise: exercise, scores: [sortedScore], totalScore: sortedScore.score, level: level, category: category)
+            }
+
+            result
         }
     }
 
