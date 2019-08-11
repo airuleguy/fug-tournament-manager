@@ -24,7 +24,7 @@
                     <h3><g:message code="category.label" />: ${current.category}</h3>
                     <h3><g:message code="exercise.label" />: ${current.exercise.name}</h3>
 
-                    <div id="list-gymnast" class="scaffold-list table-dark" role="main">
+                    <div id="list-gymnast" class="scaffold-list" role="main">
                         <f:table collection="${current.rank}" properties="${props}" domainClass="fug.tournament.api.WinCondition" />
                     </div>
                 </g:each>

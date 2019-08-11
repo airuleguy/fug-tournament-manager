@@ -18,7 +18,7 @@ class WinConditionController {
         def tournament = tournamentService.get(tournamentId)
         def rankedClubs = winConditionService.rankClubs(tournament)
 
-        render(view:"clubs", model:[tournament: tournament, ranking: rankedClubs, props: ["club", "totalScore", "scores"]])
+        render(view:"clubs", model:[tournament: tournament, ranking: rankedClubs, props: ["club", "totalScore"]])
     }
 
     def exercises(Long tournamentId) {

@@ -43,11 +43,6 @@ class WinConditionService {
             def gymnastScores = tournamentScores.groupBy { score -> score.gymnast }
 
             def result = gymnastScores.collect { scoresByGymnast ->
-
-                if(scoresByGymnast.key == Gymnast.get(16)) {
-                    def waitHere = true
-                }
-
                 def limitedScores = limitScoresByTournamentType(tournament, scoresByGymnast)
                 new WinCondition(tournament: tournament, gymnast: scoresByGymnast.key, scores: limitedScores, totalScore: limitedScores.sum { it.score }, level: level, category: category)
             }
@@ -93,12 +88,18 @@ class WinConditionService {
         }
 
         if(tournamentScores.size > 0) {
-            def clubScores = tournamentScores.groupBy { score -> score.gymnast.club }
+            def gymnastScores = tournamentScores.groupBy { score -> score.gymnast }
 
-            // FIX THIS. Get top 5 scores per club (all around results).
+            def allAround = gymnastScores.collect { scoresByGymnast ->
+                def limitedScores = limitScoresByTournamentType(tournament, scoresByGymnast)
+                [gymnast: scoresByGymnast.key, totalScore: limitedScores.sum { it.score }]
+            }
+
+            def clubScores = allAround.groupBy { winCondition -> winCondition.gymnast.club }
+
             def result = clubScores.collect { scoresByClub ->
-                def limitedScores = scoresByClub.value.take(5)
-                new WinCondition(tournament: tournament, club: scoresByClub.key, scores: limitedScores, totalScore: limitedScores.sum { it.score }, level: level)
+                def limitedScores = scoresByClub.value.sort { -it.totalScore }.take(5)
+                new WinCondition(tournament: tournament, club: scoresByClub.key, totalScore: limitedScores.sum { it.totalScore }, level: level)
             }
 
             result.sort { -it.totalScore }
@@ -157,7 +158,7 @@ class WinConditionService {
                 new WinCondition(gymnast:sortedScore.gymnast, tournament: tournament, exercise: exercise, scores: [sortedScore], totalScore: sortedScore.score, level: level, category: category)
             }
 
-            result.sort { -it.totalScore }
+            result
         }
     }
 
