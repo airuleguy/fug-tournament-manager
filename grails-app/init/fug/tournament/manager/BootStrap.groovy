@@ -15,11 +15,11 @@ class BootStrap {
     def init = { servletContext ->
         environments {
             test {
-
+                loadMockData()
             }
 
             development {
-                loadMockData()
+
             }
 
             production {

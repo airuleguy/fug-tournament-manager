@@ -5,8 +5,6 @@ import grails.gorm.transactions.Transactional
 @Transactional
 class WinConditionService {
 
-    def tournamentService
-
     def levelService
     def categoryService
     def exerciseService
@@ -45,11 +43,16 @@ class WinConditionService {
             def gymnastScores = tournamentScores.groupBy { score -> score.gymnast }
 
             def result = gymnastScores.collect { scoresByGymnast ->
+
+                if(scoresByGymnast.key == Gymnast.get(16)) {
+                    def waitHere = true
+                }
+
                 def limitedScores = limitScoresByTournamentType(tournament, scoresByGymnast)
                 new WinCondition(tournament: tournament, gymnast: scoresByGymnast.key, scores: limitedScores, totalScore: limitedScores.sum { it.score }, level: level, category: category)
             }
 
-            result
+            result.sort { -it.totalScore }
         }
     }
 
@@ -92,12 +95,13 @@ class WinConditionService {
         if(tournamentScores.size > 0) {
             def clubScores = tournamentScores.groupBy { score -> score.gymnast.club }
 
+            // FIX THIS. Get top 5 scores per club (all around results).
             def result = clubScores.collect { scoresByClub ->
-                def limitedScores = limitScoresByTournamentType(tournament, scoresByClub)
+                def limitedScores = scoresByClub.value.take(5)
                 new WinCondition(tournament: tournament, club: scoresByClub.key, scores: limitedScores, totalScore: limitedScores.sum { it.score }, level: level)
             }
 
-            result
+            result.sort { -it.totalScore }
         }
     }
 
@@ -153,7 +157,7 @@ class WinConditionService {
                 new WinCondition(gymnast:sortedScore.gymnast, tournament: tournament, exercise: exercise, scores: [sortedScore], totalScore: sortedScore.score, level: level, category: category)
             }
 
-            result
+            result.sort { -it.totalScore }
         }
     }
 
