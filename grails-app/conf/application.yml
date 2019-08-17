@@ -99,7 +99,7 @@ environments:
     development:
         dataSource:
             pooled: true
-            dbCreate: validate
+            dbCreate: update
             url: jdbc:mysql://localhost:8889/gymnastics?useUnicode=yes&characterEncoding=UTF-8&autoReconnect=true&useSSL=false
             driverClassName: com.mysql.jdbc.Driver
             dialect: org.hibernate.dialect.MySQL5InnoDBDialect
