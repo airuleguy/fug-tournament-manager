@@ -10,7 +10,7 @@ abstract class ScoreDataService implements IScoreDataService {
     TournamentService tournamentService
 
     List<Score> list(Map args) {
-        def tournament = tournamentService.get(args.tournamentId)
-        Score.findAllByTournament(tournament)
+        def tournament = tournamentService.get(args.tournamentId as long)
+        Score.findAllByTournament(tournament, [max: args.max, offset: args.offset ?: 0])
     }
 }

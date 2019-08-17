@@ -10,6 +10,7 @@ class Gymnast {
         club nullable: false
         level nullable: true
         category nullable: true
+        nationalIdentityDocumentNumber nullable: false
     }
 
     static hasMany = [scores: Score]
@@ -21,8 +22,9 @@ class Gymnast {
     Club club
     Level level
     Category category
+    Long nationalIdentityDocumentNumber
 
     String toString() {
-        "${this.name} [${this.club}]"
+        "${this.name} (${this.nationalIdentityDocumentNumber}) [${this.club}]"
     }
 }
